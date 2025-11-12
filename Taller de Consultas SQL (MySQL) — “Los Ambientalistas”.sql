@@ -1069,25 +1069,27 @@ INSERT INTO visitante (cedula, nombre, direccion, profesion, alojamiento_id, per
 (90000050,'Visitante 50','Carrera 50 #21-11','Abogado',50,50);
 
 SELECT id, nombre
-FROM area2
+FROM parque_natural
 ORDER BY nombre ASC
 LIMIT 10;
 
-SELECT id, region, departamentos
+SELECT *
 FROM departamento;
 
 SELECT id, tipo
 FROM vehiculo
 WHERE tipo = '4x4';
 
-SELECT id, categoria, capacidad, precio_x_noche
+SELECT *
 FROM alojamiento
 WHERE capacidad >= 4
 ORDER BY precio_x_noche DESC;
 
-SELECT id, titulo, fecha
-FROM titulacion
-WHERE fecha >= '2015-01-01';
+-- No hay fechas mas allá de 2015
+
+SELECT *
+FROM parque_natural
+WHERE dia_declarado >= 2010-01-01;
 
 SELECT id, nombre, cedula
 FROM visitante
@@ -1098,11 +1100,11 @@ SELECT id, nombre, extension
 FROM area2
 WHERE extension BETWEEN 15 AND 25;
 
-SELECT id, nombre, sueldo
+SELECT *
 FROM personal_parque
 WHERE sueldo BETWEEN 1800000 AND 2200000;
 
-SELECT id, nombre, profesion
+SELECT *
 FROM visitante
 WHERE profesion IN ('Ingeniero', 'Docente');
 
@@ -1111,7 +1113,7 @@ FROM alojamiento
 ORDER BY precio_x_noche DESC;
 
 SELECT COUNT(*) AS total_parques
-FROM area2;
+FROM parque_natural;
 
 SELECT profesion, COUNT(*) AS total
 FROM visitante
@@ -1121,9 +1123,13 @@ SELECT categoria, AVG(precio_x_noche) AS promedio_precio, MAX(precio_x_noche) AS
 FROM alojamiento
 GROUP BY categoria;
 
+-- no hay datos superiores o iguales a 2
+
 SELECT parque_id, COUNT(*) AS total_areas
 FROM area2
-GROUP BY parque_id;
+GROUP BY parque_id
+having count(*) >= 2
+order by parque_id;
 
 SELECT id, AVG(sueldo) AS promedio_sueldo
 FROM personal_parque

@@ -42,14 +42,14 @@ Base de datos diseñada para administrar información sobre parques naturales, i
 **1. Lista el id y nombre de las 10 primeras áreas por orden alfabético**
 ```sql
 SELECT id, nombre
-FROM area2
+FROM parque_natural
 ORDER BY nombre ASC
 LIMIT 10;
 ```
 
 **2. Muestra id, region y departamentos de todos los registros en departamento**
 ```sql
-SELECT id, region, departamentos
+SELECT *
 FROM departamento;
 ```
 
@@ -62,7 +62,7 @@ WHERE tipo = '4x4';
 
 **4. Trae los alojamientos con capacidad >= 4, ordenados por precio_x_noche descendente**
 ```sql
-SELECT id, categoria, capacidad, precio_x_noche
+SELECT *
 FROM alojamiento
 WHERE capacidad >= 4
 ORDER BY precio_x_noche DESC;
@@ -70,9 +70,11 @@ ORDER BY precio_x_noche DESC;
 
 **5. Titulaciones obtenidas a partir de 2015-01-01**
 ```sql
-SELECT id, titulo, fecha
-FROM titulacion
-WHERE fecha >= '2015-01-01';
+-- No hay fechas mas allá de 2015
+
+SELECT *
+FROM parque_natural
+WHERE dia_declarado >= 2010-01-01;;
 ```
 
 **6. Los 5 visitantes con cedula más alta**
@@ -92,14 +94,14 @@ WHERE extension BETWEEN 15 AND 25;
 
 **8. Personal del parque con sueldo entre 1'800.000 y 2'200.000**
 ```sql
-SELECT id, nombre, sueldo
+SELECT *
 FROM personal_parque
 WHERE sueldo BETWEEN 1800000 AND 2200000;
 ```
 
 **9. Visitantes cuya profesion sea 'Ingeniero' o 'Docente'**
 ```sql
-SELECT id, nombre, profesion
+SELECT *
 FROM visitante
 WHERE profesion IN ('Ingeniero', 'Docente');
 ```
@@ -116,7 +118,7 @@ ORDER BY precio_x_noche DESC;
 **1. ¿Cuántas áreas hay en total?**
 ```sql
 SELECT COUNT(*) AS total_parques
-FROM area2;
+FROM parque_natural;
 ```
 
 **2. ¿Cuántos visitantes por profesion?**
@@ -135,9 +137,13 @@ GROUP BY categoria;
 
 **4. Total de áreas por parque**
 ```sql
+-- no hay datos superiores o iguales a 2
+
 SELECT parque_id, COUNT(*) AS total_areas
 FROM area2
-GROUP BY parque_id;
+GROUP BY parque_id
+having count(*) >= 2
+order by parque_id;
 ```
 
 **5. Promedio de sueldo del personal por empleado**
